@@ -280,6 +280,52 @@ public class BinariesTree<T extends Comparable<T>> {
         return node;
     }
 
+
+    /**
+     * 从二分搜索树中删除任一元素节点
+     */
+    public void remove(T t) {
+        root = remove(root, t);
+    }
+
+    //删除以node为根的二分搜索树中值为t的节点，递归算法
+    //返回删除节点后新的二分搜索树的根
+    private Node remove(Node node, T t) {
+        if (node == null) {
+            return null;
+        }
+        //找到对应的节点
+        if (t.compareTo(node.t) < 0) {
+            node.left = remove(node.left, t);
+        } else if (t.compareTo(node.t) > 0) {
+            node.right = remove(node.right, t);
+        } else {
+            //t==node.t
+            if (node.left == null) {
+                Node rightNode = node.right;
+                node.right = null;
+                size--;
+                return rightNode;
+            }
+
+            if (node.right == null) {
+                Node leftNode = node.left;
+                node.left = null;
+                size--;
+                return leftNode;
+            }
+            Node successor = minimum(node.right);
+            successor.right = removeMin(node.right);
+            successor.left = node.left;
+            //小坑 size++;
+            node.right = node.left = null;
+            //size --; 注意小坑
+            return successor;
+        }
+        return node;
+    }
+
+
     public static void main(String[] args) {
         BinariesTree<Integer> tree = new BinariesTree<Integer>();
         int[] nums = {5, 3, 6, 8, 4, 2};

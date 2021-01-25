@@ -112,7 +112,7 @@ public class LinkedListYcTwo<T> {
     public boolean contains(T t) {
         Node cur = dummyHead.next;
         while (cur != null) {
-            if (cur.t.equals(t)) {
+            if (t.equals(cur.t)) {
                 return true;
             }
             cur = cur.next;
@@ -144,6 +144,22 @@ public class LinkedListYcTwo<T> {
 
     public T removeLast() {
         return remove(size - 1);
+    }
+
+    // 从链表中删除元素e
+    public void removeElement(T t){
+        Node prev = dummyHead;
+        while(prev.next != null){
+            if(prev.next.t.equals(t))
+                break;
+            prev = prev.next;
+        }
+
+        if(prev.next != null){
+            Node delNode = prev.next;
+            prev.next = delNode.next;
+            delNode.next = null;
+        }
     }
 
     @Override
