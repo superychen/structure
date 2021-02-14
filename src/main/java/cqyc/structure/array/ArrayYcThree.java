@@ -17,6 +17,14 @@ public class ArrayYcThree<T> {
         size = 0;
     }
 
+    public ArrayYcThree(T[] arr) {
+        data = (T[]) new Object[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            data[i] = arr[i];
+        }
+        size = arr.length;
+    }
+
     //无参构造，初始值10
     public ArrayYcThree() {
         this(10);
@@ -158,5 +166,17 @@ public class ArrayYcThree<T> {
 
     public T getFirst() {
         return get(0);
+    }
+
+    /**
+     * 交换两个索引的值
+     */
+    public void swap(int i, int j) {
+        if (i < 0 || i >= size || j < 0 || j >= size) {
+            throw new IllegalArgumentException("Index is illegal");
+        }
+        T t = data[i];
+        data[i] = data[j];
+        data[j] = t;
     }
 }
