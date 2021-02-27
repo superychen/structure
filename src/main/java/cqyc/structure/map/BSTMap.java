@@ -86,10 +86,12 @@ public class BSTMap<K extends Comparable<K>, V> implements MapYc<K, V> {
         if (node == null) {
             return null;
         }
-        if (node.key.compareTo(key) < 0) {
-            return remove(node.left, key);
-        } else if (node.key.compareTo(key) > 0) {
-            return remove(node.right, key);
+        if (key.compareTo(node.key) < 0) {
+            node.left =  remove(node.left, key);
+            return node;
+        } else if (key.compareTo(node.key) > 0) {
+            node.right = remove(node.right, key);
+            return node;
         } else {
             if (node.left == null) {
                 Node rightNode = node.right;
@@ -104,7 +106,9 @@ public class BSTMap<K extends Comparable<K>, V> implements MapYc<K, V> {
                 size--;
                 return leftNode;
             }
-
+            //待删除节点左右子树均不为空的情况
+            //找到比待删除节点大的最小节点，即待删除节点的右子树的最小节点
+            //用这个节点顶替带删除的节点的位置
             Node successor = minimum(node.right);
             successor.right = removeMin(node.right);
             successor.left = node.left;
